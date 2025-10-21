@@ -37,10 +37,15 @@ public class ConsultaController {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
-        ConsultaDTO savedConsulta = consultaService.save(consultaDTO);
-        return ResponseEntity.ok(savedConsulta);
-    }
 
+        try {
+            ConsultaDTO savedConsulta = consultaService.save(consultaDTO);
+            return ResponseEntity.ok(savedConsulta);
+        } catch (Exception e) {
+
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {

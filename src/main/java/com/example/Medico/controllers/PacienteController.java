@@ -56,4 +56,3 @@ public class PacienteController {
         return ResponseEntity.noContent().build();
     }
 }
-
