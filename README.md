@@ -1,4 +1,4 @@
-# Documentação da Api.
+## Documentação da Api.
 
 ## Gestão Médica
 
