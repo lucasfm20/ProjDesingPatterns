@@ -2,6 +2,7 @@ package com.example.Medico.services;
 
 import com.example.Medico.dtos.ConsultaDTO;
 import com.example.Medico.dtos.PacienteDTO;
+import com.example.Medico.mappers.PacienteMapper;
 import com.example.Medico.models.Paciente;
 import com.example.Medico.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +21,17 @@ public class PacienteService {
 
     public Page<PacienteDTO> findAll(Pageable pageable) {
         return pacienteRepository.findAll(pageable)
-                .map(this::convertToDTO);
+                .map(PacienteMapper::convertToDTO);
     }
 
     public Optional<PacienteDTO> findById(Long id) {
         return pacienteRepository.findById(id)
-                .map(this::convertToDTO);
+                .map(PacienteMapper::convertToDTO);
     }
 
     public PacienteDTO save(PacienteDTO pacienteDTO) {
-        Paciente paciente = convertToEntity(pacienteDTO);
-        return convertToDTO(pacienteRepository.save(paciente));
+        Paciente paciente = PacienteMapper.convertToEntity(pacienteDTO);
+        return PacienteMapper.convertToDTO(pacienteRepository.save(paciente));
     }
 
     public void deleteById(Long id) {
@@ -50,25 +51,9 @@ public class PacienteService {
                 existingPaciente.setContato(pacienteDTO.getContato());
             }
             Paciente update =pacienteRepository.save(existingPaciente);
-            return convertToDTO(update);
+            return PacienteMapper.convertToDTO(update);
         });
     }
 
-    private PacienteDTO convertToDTO(Paciente paciente) {
-        PacienteDTO pacienteDTO = new PacienteDTO();
-        pacienteDTO.setId(paciente.getId());
-        pacienteDTO.setNome(paciente.getNome());
-        pacienteDTO.setDataDeNascimento(paciente.getDataDeNascimento());
-        pacienteDTO.setContato(paciente.getContato());
-        return pacienteDTO;
-    }
 
-    private Paciente convertToEntity(PacienteDTO pacienteDTO) {
-        Paciente paciente = new Paciente();
-        paciente.setId(pacienteDTO.getId());
-        paciente.setNome(pacienteDTO.getNome());
-        paciente.setDataDeNascimento(pacienteDTO.getDataDeNascimento());
-        paciente.setContato(pacienteDTO.getContato());
-        return paciente;
-    }
 }
