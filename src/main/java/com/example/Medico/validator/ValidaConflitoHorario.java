@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class ValidaConflitoHorario extends ValidadorConsulta {
 
     @Autowired
-    private ConsultaRepository consultaRepository;
+    ConsultaRepository consultaRepository;
 
     @Override
     protected void executarValidacao(ConsultaDTO consultaDTO) throws Exception {
