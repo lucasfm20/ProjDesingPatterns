@@ -111,3 +111,27 @@ Post : /tratamentos
 }
 ]
 ```
+
+## Análise dos Problemas Detectados 
+
+- Uso de try catch com exceções genéricas. 
+
+- O código de conversão convertToDTO() e convertToEntity() é repetitivo e polui a classe de serviço. 
+
+- Alguns métodos não são tão claros como o findAll() da classe ConsultaServices. 
+
+- Poucos comentários no código, dificultando a compreensão do mesmo. 
+
+
+
+## Estratégia de Refatoração 
+
+- Criar exceções específicas.
+- 
+- Criar uma classe mapper para deixar o código mais limpo e manter as classes services apenas com a regra de negócio.
+  
+- Deixar as variáveis e métodos mais claros de suas funcionalidades.
+  
+- Adicionar comentários das principais funções do código, facilitando uma futura manutenção.
+  
+- Utilização de linter Checkstyle para manter a padronização do código. 
