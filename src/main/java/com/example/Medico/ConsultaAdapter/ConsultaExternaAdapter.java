@@ -6,6 +6,7 @@ import com.example.Medico.dtos.ConsultaDTO;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+//Busca consulta externa e adapta para o sistema atual
 public class ConsultaExternaAdapter {
 
     public static ConsultaDTO adaptar(ConsultaExternaDTO externaDTO) {
