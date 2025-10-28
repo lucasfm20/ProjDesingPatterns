@@ -16,18 +16,16 @@ public class Diagnostico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+
     private Long pacienteId;
 
-    @NotNull
+
     private Long medicoId;
 
-    @NotNull
-    @FutureOrPresent
+
     private LocalDateTime dataHora;
 
-    @NotNull
-    @Size(min = 10, max = 500)
+
     private String descricao;
 
     public Diagnostico(Long id, Long pacienteId, Long medicoId, LocalDateTime dataHora, String descricao) {

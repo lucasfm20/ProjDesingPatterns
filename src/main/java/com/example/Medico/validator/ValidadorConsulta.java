@@ -11,6 +11,7 @@ public abstract class ValidadorConsulta {
         this.proximo = proximo;
     }
 
+    //Chama os validadores
     public void validar(ConsultaDTO consultaDTO) throws Exception {
         executarValidacao(consultaDTO);
         if (proximo != null) {

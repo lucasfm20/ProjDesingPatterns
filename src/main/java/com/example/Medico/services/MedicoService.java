@@ -17,22 +17,26 @@ public class MedicoService {
     @Autowired
     private MedicoRepository medicoRepository;
 
+    //Consultar todos os médicos
     public List<MedicoDTO> findAll() {
         return medicoRepository.findAll().stream()
                 .map(MedicoMapper::convertToDTO)
                 .collect(Collectors.toList());
     }
 
+    //Consultar médicos pelo id
     public Optional<MedicoDTO> findById(Long id) {
         return medicoRepository.findById(id)
                 .map(MedicoMapper::convertToDTO);
     }
 
+    //Criar novo médico
     public MedicoDTO save(MedicoDTO medicoDTO) {
         Medico medico = MedicoMapper.convertToEntity(medicoDTO);
         return MedicoMapper.convertToDTO(medicoRepository.save(medico));
     }
 
+    //Deletar o médico
     public void deleteById(Long id) {
         medicoRepository.deleteById(id);
     }

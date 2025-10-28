@@ -17,22 +17,26 @@ public class TratamentoService {
     @Autowired
     private TratamentoRepository tratamentoRepository;
 
+    //Buscar todos os tratamentos
     public List<TratamentoDTO> findAll() {
         List<Tratamento> tratamentos = tratamentoRepository.findAll();
         return tratamentos.stream().map(TratamentoMapper::convertToDTO).collect(Collectors.toList());
     }
 
+    //Encontrar tratamento pelo id
     public Optional<TratamentoDTO> findById(Long id) {
         Optional<Tratamento> tratamento = tratamentoRepository.findById(id);
         return tratamento.map(TratamentoMapper::convertToDTO);
     }
 
+    //Criar novo tratamento
     public TratamentoDTO save(TratamentoDTO tratamentoDTO) {
         Tratamento tratamento = TratamentoMapper.convertToEntity(tratamentoDTO);
         tratamento = tratamentoRepository.save(tratamento);
         return TratamentoMapper.convertToDTO(tratamento);
     }
 
+    //Deletar tratamento
     public void deleteById(Long id) {
         tratamentoRepository.deleteById(id);
     }

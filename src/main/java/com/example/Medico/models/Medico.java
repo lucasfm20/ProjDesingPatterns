@@ -12,15 +12,12 @@ public class Medico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull(message = "O nome do medico é obrigatório")
-    @Size(min = 2, max = 50, message = "O nome deve ter no minimo 2 caracteres e no máximo 50")
+
     private String nome;
 
-    @NotNull(message = "A especialidade do medico é obrigatória")
-    @Size(min = 2, max = 50, message = "A especialidade deve ter no minimo 2 caracteres e no máximo 50")
+
     private String especialidade;
-    @NotNull(message = "O contato do medico é obrigatório")
-    @Size(min = 10, max = 15, message = "O contato deve ter entre 10 e 15 números")
+
     private String contato;
 
 
