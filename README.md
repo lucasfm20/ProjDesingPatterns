@@ -127,7 +127,7 @@ Post : /tratamentos
 ## Estratégia de Refatoração 
 
 - Criar exceções específicas.
-- 
+  
 - Criar uma classe mapper para deixar o código mais limpo e manter as classes services apenas com a regra de negócio.
   
 - Deixar as variáveis e métodos mais claros de suas funcionalidades.
