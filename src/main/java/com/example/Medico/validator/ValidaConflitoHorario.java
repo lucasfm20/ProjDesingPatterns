@@ -11,6 +11,7 @@ public class ValidaConflitoHorario extends ValidadorConsulta {
     @Autowired
     private ConsultaRepository consultaRepository;
 
+    //Valida consultas não permitindo cadastro no mesmo horário
     @Override
     protected void executarValidacao(ConsultaDTO consultaDTO) throws Exception {
         boolean existe = consultaRepository.existsByMedicoIdAndDataHora(

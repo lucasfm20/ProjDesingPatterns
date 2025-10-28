@@ -17,22 +17,26 @@ public class DiagnosticoService {
     @Autowired
     private DiagnosticoRepository diagnosticoRepository;
 
+    //Consutar todos os diagnósticos
     public List<DiagnosticoDTO> findAll() {
         List<Diagnostico> diagnosticos = diagnosticoRepository.findAll();
         return diagnosticos.stream().map(DiagnosticoMapper::convertToDTO).collect(Collectors.toList());
     }
 
+    //Consultar apenas um diagnóstico
     public Optional<DiagnosticoDTO> findById(Long id) {
         Optional<Diagnostico> diagnostico = diagnosticoRepository.findById(id);
         return diagnostico.map(DiagnosticoMapper::convertToDTO);
     }
 
+    //Salvar o diagnóstico criado
     public DiagnosticoDTO save(DiagnosticoDTO diagnosticoDTO) {
         Diagnostico diagnostico = DiagnosticoMapper.convertToEntity(diagnosticoDTO);
         diagnostico = diagnosticoRepository.save(diagnostico);
         return DiagnosticoMapper.convertToDTO(diagnostico);
     }
 
+    //Deletar diagnóstico
     public void deleteById(Long id) {
         diagnosticoRepository.deleteById(id);
     }

@@ -19,26 +19,30 @@ public class PacienteService {
     @Autowired
     private PacienteRepository pacienteRepository;
 
+    //Consultar todos os pacientes
     public Page<PacienteDTO> findAll(Pageable pageable) {
         return pacienteRepository.findAll(pageable)
                 .map(PacienteMapper::convertToDTO);
     }
 
+    //Consultar apenas o paciente pelo id
     public Optional<PacienteDTO> findById(Long id) {
         return pacienteRepository.findById(id)
                 .map(PacienteMapper::convertToDTO);
     }
 
+    //Criar novo paciente
     public PacienteDTO save(PacienteDTO pacienteDTO) {
         Paciente paciente = PacienteMapper.convertToEntity(pacienteDTO);
         return PacienteMapper.convertToDTO(pacienteRepository.save(paciente));
     }
 
+    //Deletar paciente
     public void deleteById(Long id) {
         pacienteRepository.deleteById(id);
     }
 
-
+    //Atualizar o registro de um paciente
     public Optional<PacienteDTO> update(Long id, PacienteDTO pacienteDTO) {
         return pacienteRepository.findById(id).map(existingPaciente -> {
             if (pacienteDTO.getNome() != null) {

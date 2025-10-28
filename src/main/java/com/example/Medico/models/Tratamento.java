@@ -13,18 +13,16 @@ public class Tratamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "O ID do diagnóstico é obrigatório")
+
     private Long diagnosticoId;
 
-    @NotNull(message = "O ID do medicamento é obrigatório")
+
     private String medicamentoId;
 
-    @NotNull
-    @Size(min = 10, max = 500, message = "A descrição deve ter entre 10 e 500 caracteres")
+
     private String descricao;
 
-    @NotNull
-    @Size(min = 5, max = 255, message = "A duração deve ter entre 5 e 255 caracteres")
+
     private String duracao;
 
     public Tratamento(Long id, Long diagnosticoId, String medicamentoId, String descricao, String duracao) {
