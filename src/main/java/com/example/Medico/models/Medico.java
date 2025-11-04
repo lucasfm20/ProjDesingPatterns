@@ -12,14 +12,9 @@ public class Medico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nome;
-
-
     private String especialidade;
-
     private String contato;
-
 
     public Medico(Long id, String nome, String especialidade, String contato) {
         this.id = id;

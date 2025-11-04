@@ -28,8 +28,7 @@ public class ConsultaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ConsultaDTO> findById(@PathVariable Long id) {
-        Optional<ConsultaDTO> consulta = consultaService.findById(id);
-        return consulta.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return consultaService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -42,7 +41,6 @@ public class ConsultaController {
             ConsultaDTO savedConsulta = consultaService.save(consultaDTO);
             return ResponseEntity.ok(savedConsulta);
         } catch (Exception e) {
-
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

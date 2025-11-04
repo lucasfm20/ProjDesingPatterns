@@ -16,13 +16,8 @@ public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
     private String nome;
-
     private LocalDate dataDeNascimento;
-
-
     private String contato;
 
     public Paciente(Long id, String nome, LocalDate dataDeNascimento, String contato) {

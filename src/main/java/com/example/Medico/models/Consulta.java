@@ -16,10 +16,8 @@ public class Consulta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long pacienteId;
-
     private Long medicoId;
     private LocalDateTime dataHora;
-
     private String descricao;
 
     public Consulta(Long id, Long pacienteId, Long medicoId, LocalDateTime dataHora, String descricao) {

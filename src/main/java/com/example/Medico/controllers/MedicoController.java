@@ -17,7 +17,6 @@ import java.util.Optional;
 public class MedicoController {
     @Autowired
     private MedicoService medicoService;
-
     @GetMapping
     public List<MedicoDTO> findAll() {
         return medicoService.findAll();
@@ -25,8 +24,7 @@ public class MedicoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MedicoDTO> findById(@PathVariable Long id) {
-        Optional<MedicoDTO> medico = medicoService.findById(id);
-        return medico.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return medicoService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping

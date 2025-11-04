@@ -7,7 +7,6 @@ public class Ajuda {
     private String nome;
     private String tema;
 
-
     public Ajuda(ArrayList<String> estudantes, String nome, String tema) {
         this.estudantes = estudantes;
         this.nome = nome;

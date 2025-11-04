@@ -15,17 +15,9 @@ public class Diagnostico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
     private Long pacienteId;
-
-
     private Long medicoId;
-
-
     private LocalDateTime dataHora;
-
-
     private String descricao;
 
     public Diagnostico(Long id, Long pacienteId, Long medicoId, LocalDateTime dataHora, String descricao) {

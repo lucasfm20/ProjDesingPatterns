@@ -20,14 +20,12 @@ public class ConsultaService {
     private ConsultaRepository consultaRepository;
 
     // Buscar todas as consultas disponíveis
-
     public Page<ConsultaDTO> findAll(Pageable pageable) {
         return consultaRepository.findAll(pageable)
                 .map(ConsultaMapper::convertToDTO);
     }
 
     // Buscar individualmente a consulta
-
     public Optional<ConsultaDTO> findById(Long id) {
         return consultaRepository.findById(id)
                 .map(ConsultaMapper::convertToDTO);
@@ -35,12 +33,10 @@ public class ConsultaService {
 
     @Autowired
     private ValidaPaciente validaPaciente;
-
     @Autowired
     private ValidaConflitoHorario validaConflitoHorario;
 
     // Salvar a consulta
-
     public ConsultaDTO save(ConsultaDTO consultaDTO) {
         try {
             validaPaciente.setProximo(validaConflitoHorario);
@@ -54,7 +50,6 @@ public class ConsultaService {
     }
 
     // Deletar com base no ID
-
     public void deleteById(Long id) {
         consultaRepository.deleteById(id);
     }

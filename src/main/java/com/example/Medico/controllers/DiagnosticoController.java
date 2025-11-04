@@ -25,8 +25,7 @@ public class DiagnosticoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DiagnosticoDTO> findById(@PathVariable Long id) {
-        Optional<DiagnosticoDTO> diagnostico = diagnosticoService.findById(id);
-        return diagnostico.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return diagnosticoService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping

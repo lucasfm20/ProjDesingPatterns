@@ -29,8 +29,7 @@ public class PacienteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PacienteDTO> findById(@PathVariable Long id) {
-        Optional<PacienteDTO> paciente = pacienteService.findById(id);
-        return paciente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return pacienteService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -46,8 +45,7 @@ public class PacienteController {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
         }
-        Optional<PacienteDTO> updatedPaciente = pacienteService.update(id, pacienteDTO);
-        return updatedPaciente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return pacienteService.update(id, pacienteDTO).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

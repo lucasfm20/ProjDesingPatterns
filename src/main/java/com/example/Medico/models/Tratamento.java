@@ -12,17 +12,9 @@ public class Tratamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
     private Long diagnosticoId;
-
-
     private String medicamentoId;
-
-
     private String descricao;
-
-
     private String duracao;
 
     public Tratamento(Long id, Long diagnosticoId, String medicamentoId, String descricao, String duracao) {

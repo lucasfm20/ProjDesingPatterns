@@ -24,8 +24,7 @@ public class TratamentoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TratamentoDTO> findById(@PathVariable Long id) {
-        Optional<TratamentoDTO> tratamento = tratamentoService.findById(id);
-        return tratamento.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return tratamentoService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
