@@ -6,7 +6,7 @@ O propósito do projeto é, por meio de API’s, gerenciar um sistema de consult
 
 ## Histórico de alterações
 
-Consulte o arquivo [`CHANGELOG.md`](CHANGELOG.md) para acompanhar as versões e registre qualquer nova mudança relevante antes de concluir o merge de uma feature.
+Consulte o arquivo [`CHANGELOG.md`](CHANGELOG.md) para acompanhar as versões e registrar qualquer nova mudança relevante antes de concluir o merge de uma feature.
 
 ### Casos de Uso
 

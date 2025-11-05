@@ -5,7 +5,9 @@ Todas as mudanças relevantes deste projeto serão documentadas aqui.
 O formato segue as práticas de [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e a numeração de versões adota [SemVer](https://semver.org/lang/pt-BR/).
 
 ## [0.1.0] - 2025-11-05
-### Added
+
+### Adicionado
+
 - Estrutura inicial do domínio de gestão médica com modelos para `Paciente`, `Medico`, `Consulta`, `Diagnostico` e `Tratamento`.
 - Controladores REST para cadastro, consulta e exclusão das principais entidades em `controllers`.
 - Serviços que encapsulam as regras de negócio centrais e interação com os repositórios JPA.
