@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/diagnosticos")
@@ -19,13 +18,19 @@ public class DiagnosticoController {
     private DiagnosticoService diagnosticoService;
 
     @GetMapping
-    public List<DiagnosticoDTO> findAll() {
-        return diagnosticoService.findAll();
+    public ResponseEntity<?> findAll() {
+        List<DiagnosticoDTO> diagnosticos = diagnosticoService.findAll();
+        if (diagnosticos.isEmpty()) {
+            return ResponseEntity.ok("Nenhum diagnóstico cadastrado.");
+        }
+        return ResponseEntity.ok(diagnosticos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DiagnosticoDTO> findById(@PathVariable Long id) {
-        return diagnosticoService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return diagnosticoService.findById(id)
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(404).body("Diagnóstico não encontrado."));
     }
 
     @PostMapping
@@ -37,8 +42,8 @@ public class DiagnosticoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    public ResponseEntity<String> deleteById(@PathVariable Long id) {
         diagnosticoService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Diagnóstico removido com sucesso.");
     }
 }

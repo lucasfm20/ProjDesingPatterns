@@ -9,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/tratamentos")
@@ -18,13 +17,19 @@ public class TratamentoController {
     private TratamentoService tratamentoService;
 
     @GetMapping
-    public List<TratamentoDTO> findAll() {
-        return tratamentoService.findAll();
+    public ResponseEntity<?> findAll() {
+        List<TratamentoDTO> tratamentos = tratamentoService.findAll();
+        if (tratamentos.isEmpty()) {
+            return ResponseEntity.ok("Nenhum tratamento cadastrado.");
+        }
+        return ResponseEntity.ok(tratamentos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TratamentoDTO> findById(@PathVariable Long id) {
-        return tratamentoService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return tratamentoService.findById(id)
+                .<ResponseEntity<?>>map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(404).body("Tratamento não encontrado."));
     }
 
     @PostMapping
@@ -36,8 +41,8 @@ public class TratamentoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    public ResponseEntity<String> deleteById(@PathVariable Long id) {
         tratamentoService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Tratamento removido com sucesso.");
     }
 }

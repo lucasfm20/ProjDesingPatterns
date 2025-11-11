@@ -39,16 +39,26 @@ class TratamentoControllerTest {
         TratamentoDTO t2 = new TratamentoDTO();
         List<TratamentoDTO> list = Arrays.asList(t1, t2);
         when(tratamentoService.findAll()).thenReturn(list);
-        List<TratamentoDTO> result = tratamentoController.findAll();
-        assertEquals(2, result.size());
+        ResponseEntity<?> response = tratamentoController.findAll();
+        assertEquals(200, response.getStatusCode().value());
+        assertTrue(response.getBody() instanceof List);
+        assertEquals(2, ((List<?>) response.getBody()).size());
         verify(tratamentoService, times(1)).findAll();
+    }
+
+    @Test
+    void testFindAllEmpty() {
+        when(tratamentoService.findAll()).thenReturn(List.of());
+        ResponseEntity<?> response = tratamentoController.findAll();
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Nenhum tratamento cadastrado.", response.getBody());
     }
 
     @Test
     void testFindByIdFound() {
         TratamentoDTO t = new TratamentoDTO();
         when(tratamentoService.findById(1L)).thenReturn(Optional.of(t));
-        ResponseEntity<TratamentoDTO> response = tratamentoController.findById(1L);
+        ResponseEntity<?> response = tratamentoController.findById(1L);
         assertEquals(200, response.getStatusCode().value());
         assertEquals(t, response.getBody());
     }
@@ -56,9 +66,9 @@ class TratamentoControllerTest {
     @Test
     void testFindByIdNotFound() {
         when(tratamentoService.findById(1L)).thenReturn(Optional.empty());
-        ResponseEntity<TratamentoDTO> response = tratamentoController.findById(1L);
+        ResponseEntity<?> response = tratamentoController.findById(1L);
         assertEquals(404, response.getStatusCode().value());
-        assertNull(response.getBody());
+        assertEquals("Tratamento não encontrado.", response.getBody());
     }
 
     @Test
@@ -83,8 +93,9 @@ class TratamentoControllerTest {
     @Test
     void testDeleteById() {
         doNothing().when(tratamentoService).deleteById(1L);
-        ResponseEntity<Void> response = tratamentoController.deleteById(1L);
-        assertEquals(204, response.getStatusCode().value());
+        ResponseEntity<String> response = tratamentoController.deleteById(1L);
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Tratamento removido com sucesso.", response.getBody());
         verify(tratamentoService, times(1)).deleteById(1L);
     }
 }

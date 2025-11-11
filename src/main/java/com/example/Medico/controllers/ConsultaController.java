@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/consultas")
 public class ConsultaController {
@@ -20,15 +18,20 @@ public class ConsultaController {
     private ConsultaService consultaService;
 
     @GetMapping
-    public Page<ConsultaDTO> findAll(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page,
                                      @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return consultaService.findAll(pageable);
+        Page<ConsultaDTO> consultas = consultaService.findAll(pageable);
+        if (consultas.isEmpty()) {
+            return ResponseEntity.ok("Nenhuma consulta cadastrada.");
+        }
+        return ResponseEntity.ok(consultas);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ConsultaDTO> findById(@PathVariable Long id) {
-        return consultaService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        ConsultaDTO consultaDTO = consultaService.findById(id);
+        return ResponseEntity.ok(consultaDTO);
     }
 
     @PostMapping
@@ -46,8 +49,8 @@ public class ConsultaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    public ResponseEntity<String> deleteById(@PathVariable Long id) {
         consultaService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Consulta removida com sucesso.");
     }
 }

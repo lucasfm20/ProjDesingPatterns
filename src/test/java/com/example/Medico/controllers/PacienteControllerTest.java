@@ -41,26 +41,37 @@ class PacienteControllerTest {
         PacienteDTO p2 = new PacienteDTO();
         Page<PacienteDTO> page = new PageImpl<>(Arrays.asList(p1, p2));
         when(pacienteService.findAll(any(Pageable.class))).thenReturn(page);
-        Page<PacienteDTO> result = pacienteController.findAll(0, 10);
-        assertEquals(2, result.getContent().size());
+        ResponseEntity<?> response = pacienteController.findAll(0, 10);
+        assertEquals(200, response.getStatusCode().value());
+        assertTrue(response.getBody() instanceof Page);
+        assertEquals(2, ((Page<?>) response.getBody()).getContent().size());
         verify(pacienteService, times(1)).findAll(any(Pageable.class));
+    }
+
+    @Test
+    void testFindAllEmpty() {
+        Page<PacienteDTO> emptyPage = Page.empty();
+        when(pacienteService.findAll(any(Pageable.class))).thenReturn(emptyPage);
+        ResponseEntity<?> response = pacienteController.findAll(0, 10);
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Nenhum paciente cadastrado.", response.getBody());
     }
 
     @Test
     void testFindByIdFound() {
         PacienteDTO p = new PacienteDTO();
         when(pacienteService.findById(1L)).thenReturn(Optional.of(p));
-        ResponseEntity<PacienteDTO> response = pacienteController.findById(1L);
-        assertEquals(200, response.getStatusCodeValue());
+        ResponseEntity<?> response = pacienteController.findById(1L);
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(p, response.getBody());
     }
 
     @Test
     void testFindByIdNotFound() {
         when(pacienteService.findById(1L)).thenReturn(Optional.empty());
-        ResponseEntity<PacienteDTO> response = pacienteController.findById(1L);
-        assertEquals(404, response.getStatusCodeValue());
-        assertNull(response.getBody());
+        ResponseEntity<?> response = pacienteController.findById(1L);
+        assertEquals(404, response.getStatusCode().value());
+        assertEquals("Paciente não encontrado.", response.getBody());
     }
 
     @Test
@@ -69,7 +80,7 @@ class PacienteControllerTest {
         when(bindingResult.hasErrors()).thenReturn(false);
         when(pacienteService.save(any(PacienteDTO.class))).thenReturn(p);
         ResponseEntity<?> response = pacienteController.save(p, bindingResult);
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(p, response.getBody());
     }
 
@@ -79,7 +90,7 @@ class PacienteControllerTest {
         when(bindingResult.hasErrors()).thenReturn(true);
         when(bindingResult.getAllErrors()).thenReturn(Arrays.asList());
         ResponseEntity<?> response = pacienteController.save(p, bindingResult);
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
     }
 
     @Test
@@ -88,7 +99,7 @@ class PacienteControllerTest {
         when(bindingResult.hasErrors()).thenReturn(false);
         when(pacienteService.update(eq(1L), any(PacienteDTO.class))).thenReturn(Optional.of(p));
         ResponseEntity<?> response = pacienteController.update(1L, p, bindingResult);
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(p, response.getBody());
     }
 
@@ -98,7 +109,7 @@ class PacienteControllerTest {
         when(bindingResult.hasErrors()).thenReturn(true);
         when(bindingResult.getAllErrors()).thenReturn(Arrays.asList());
         ResponseEntity<?> response = pacienteController.update(1L, p, bindingResult);
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
     }
 
     @Test
@@ -107,14 +118,16 @@ class PacienteControllerTest {
         when(bindingResult.hasErrors()).thenReturn(false);
         when(pacienteService.update(eq(1L), any(PacienteDTO.class))).thenReturn(Optional.empty());
         ResponseEntity<?> response = pacienteController.update(1L, p, bindingResult);
-        assertEquals(404, response.getStatusCodeValue());
+        assertEquals(404, response.getStatusCode().value());
+        assertEquals("Paciente não encontrado.", response.getBody());
     }
 
     @Test
     void testDeleteById() {
         doNothing().when(pacienteService).deleteById(1L);
-        ResponseEntity<Void> response = pacienteController.deleteById(1L);
-        assertEquals(204, response.getStatusCodeValue());
+        ResponseEntity<String> response = pacienteController.deleteById(1L);
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Paciente removido com sucesso.", response.getBody());
         verify(pacienteService, times(1)).deleteById(1L);
     }
 }

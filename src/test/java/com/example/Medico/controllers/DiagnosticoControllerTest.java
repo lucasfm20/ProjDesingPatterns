@@ -39,26 +39,36 @@ class DiagnosticoControllerTest {
         DiagnosticoDTO d2 = new DiagnosticoDTO();
         List<DiagnosticoDTO> list = Arrays.asList(d1, d2);
         when(diagnosticoService.findAll()).thenReturn(list);
-        List<DiagnosticoDTO> result = diagnosticoController.findAll();
-        assertEquals(2, result.size());
+        ResponseEntity<?> response = diagnosticoController.findAll();
+        assertEquals(200, response.getStatusCode().value());
+        assertTrue(response.getBody() instanceof List);
+        assertEquals(2, ((List<?>) response.getBody()).size());
         verify(diagnosticoService, times(1)).findAll();
+    }
+
+    @Test
+    void testFindAllEmpty() {
+        when(diagnosticoService.findAll()).thenReturn(List.of());
+        ResponseEntity<?> response = diagnosticoController.findAll();
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Nenhum diagnóstico cadastrado.", response.getBody());
     }
 
     @Test
     void testFindByIdFound() {
         DiagnosticoDTO d = new DiagnosticoDTO();
         when(diagnosticoService.findById(1L)).thenReturn(Optional.of(d));
-        ResponseEntity<DiagnosticoDTO> response = diagnosticoController.findById(1L);
-        assertEquals(200, response.getStatusCodeValue());
+        ResponseEntity<?> response = diagnosticoController.findById(1L);
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(d, response.getBody());
     }
 
     @Test
     void testFindByIdNotFound() {
         when(diagnosticoService.findById(1L)).thenReturn(Optional.empty());
-        ResponseEntity<DiagnosticoDTO> response = diagnosticoController.findById(1L);
-        assertEquals(404, response.getStatusCodeValue());
-        assertNull(response.getBody());
+        ResponseEntity<?> response = diagnosticoController.findById(1L);
+        assertEquals(404, response.getStatusCode().value());
+        assertEquals("Diagnóstico não encontrado.", response.getBody());
     }
 
     @Test
@@ -67,7 +77,7 @@ class DiagnosticoControllerTest {
         when(bindingResult.hasErrors()).thenReturn(false);
         when(diagnosticoService.save(any(DiagnosticoDTO.class))).thenReturn(d);
         ResponseEntity<?> response = diagnosticoController.save(d, bindingResult);
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(d, response.getBody());
     }
 
@@ -77,14 +87,15 @@ class DiagnosticoControllerTest {
         when(bindingResult.hasErrors()).thenReturn(true);
         when(bindingResult.getAllErrors()).thenReturn(Arrays.asList());
         ResponseEntity<?> response = diagnosticoController.save(d, bindingResult);
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
     }
 
     @Test
     void testDeleteById() {
         doNothing().when(diagnosticoService).deleteById(1L);
-        ResponseEntity<Void> response = diagnosticoController.deleteById(1L);
-        assertEquals(204, response.getStatusCodeValue());
+        ResponseEntity<String> response = diagnosticoController.deleteById(1L);
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Diagnóstico removido com sucesso.", response.getBody());
         verify(diagnosticoService, times(1)).deleteById(1L);
     }
 }

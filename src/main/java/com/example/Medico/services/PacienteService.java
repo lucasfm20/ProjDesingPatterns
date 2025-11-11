@@ -1,6 +1,5 @@
 package com.example.Medico.services;
 
-import com.example.Medico.dtos.ConsultaDTO;
 import com.example.Medico.dtos.PacienteDTO;
 import com.example.Medico.mappers.PacienteMapper;
 import com.example.Medico.models.Paciente;
@@ -10,9 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class PacienteService {

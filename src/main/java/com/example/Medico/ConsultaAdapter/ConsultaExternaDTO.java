@@ -1,7 +1,5 @@
 package com.example.Medico.ConsultaAdapter;
 
-import java.time.LocalDateTime;
-
 public class ConsultaExternaDTO {
     private Long idConsulta;
     private Long idPaciente;

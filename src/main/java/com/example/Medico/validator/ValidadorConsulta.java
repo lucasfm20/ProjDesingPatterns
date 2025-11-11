@@ -1,8 +1,6 @@
 package com.example.Medico.validator;
 
 import com.example.Medico.dtos.ConsultaDTO;
-import org.springframework.stereotype.Component;
-
 
 public abstract class ValidadorConsulta {
     protected ValidadorConsulta proximo;

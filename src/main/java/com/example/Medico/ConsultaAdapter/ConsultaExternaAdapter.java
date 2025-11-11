@@ -1,6 +1,5 @@
 package com.example.Medico.ConsultaAdapter;
 
-import com.example.Medico.ConsultaAdapter.ConsultaExternaDTO;
 import com.example.Medico.dtos.ConsultaDTO;
 
 import java.time.LocalDateTime;

@@ -39,26 +39,36 @@ class MedicoControllerTest {
         MedicoDTO m2 = new MedicoDTO();
         List<MedicoDTO> list = Arrays.asList(m1, m2);
         when(medicoService.findAll()).thenReturn(list);
-        List<MedicoDTO> result = medicoController.findAll();
-        assertEquals(2, result.size());
+        ResponseEntity<?> response = medicoController.findAll();
+        assertEquals(200, response.getStatusCode().value());
+        assertTrue(response.getBody() instanceof List);
+        assertEquals(2, ((List<?>) response.getBody()).size());
         verify(medicoService, times(1)).findAll();
+    }
+
+    @Test
+    void testFindAllEmpty() {
+        when(medicoService.findAll()).thenReturn(List.of());
+        ResponseEntity<?> response = medicoController.findAll();
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Nenhum médico cadastrado.", response.getBody());
     }
 
     @Test
     void testFindByIdFound() {
         MedicoDTO m = new MedicoDTO();
         when(medicoService.findById(1L)).thenReturn(Optional.of(m));
-        ResponseEntity<MedicoDTO> response = medicoController.findById(1L);
-        assertEquals(200, response.getStatusCodeValue());
+        ResponseEntity<?> response = medicoController.findById(1L);
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(m, response.getBody());
     }
 
     @Test
     void testFindByIdNotFound() {
         when(medicoService.findById(1L)).thenReturn(Optional.empty());
-        ResponseEntity<MedicoDTO> response = medicoController.findById(1L);
-        assertEquals(404, response.getStatusCodeValue());
-        assertNull(response.getBody());
+        ResponseEntity<?> response = medicoController.findById(1L);
+        assertEquals(404, response.getStatusCode().value());
+        assertEquals("Médico não encontrado.", response.getBody());
     }
 
     @Test
@@ -67,7 +77,7 @@ class MedicoControllerTest {
         when(bindingResult.hasErrors()).thenReturn(false);
         when(medicoService.save(any(MedicoDTO.class))).thenReturn(m);
         ResponseEntity<?> response = medicoController.save(m, bindingResult);
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(m, response.getBody());
     }
 
@@ -77,14 +87,15 @@ class MedicoControllerTest {
         when(bindingResult.hasErrors()).thenReturn(true);
         when(bindingResult.getAllErrors()).thenReturn(Arrays.asList());
         ResponseEntity<?> response = medicoController.save(m, bindingResult);
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
     }
 
     @Test
     void testDeleteById() {
         doNothing().when(medicoService).deleteById(1L);
-        ResponseEntity<Void> response = medicoController.deleteById(1L);
-        assertEquals(204, response.getStatusCodeValue());
+        ResponseEntity<String> response = medicoController.deleteById(1L);
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Médico removido com sucesso.", response.getBody());
         verify(medicoService, times(1)).deleteById(1L);
     }
 }

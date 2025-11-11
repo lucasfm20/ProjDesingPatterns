@@ -1,6 +1,7 @@
 package com.example.Medico.controllers;
 
 import com.example.Medico.dtos.ConsultaDTO;
+import com.example.Medico.exceptions.ConsultaNotFoundException;
 import com.example.Medico.services.ConsultaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -42,28 +42,34 @@ class ConsultaControllerTest {
         Page<ConsultaDTO> page = new PageImpl<>(Arrays.asList(consulta1, consulta2));
         when(consultaService.findAll(any(Pageable.class))).thenReturn(page);
 
-        Page<ConsultaDTO> result = consultaController.findAll(0, 10);
-        assertEquals(2, result.getContent().size());
+        ResponseEntity<?> response = consultaController.findAll(0, 10);
+        assertEquals(200, response.getStatusCode().value());
+        assertTrue(response.getBody() instanceof Page);
+        assertEquals(2, ((Page<?>) response.getBody()).getContent().size());
         verify(consultaService, times(1)).findAll(any(Pageable.class));
+    }
+
+    @Test
+    void testFindAllEmpty() {
+        when(consultaService.findAll(any(Pageable.class))).thenReturn(Page.empty());
+        ResponseEntity<?> response = consultaController.findAll(0, 10);
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Nenhuma consulta cadastrada.", response.getBody());
     }
 
     @Test
     void testFindByIdFound() {
         ConsultaDTO consulta = new ConsultaDTO();
-        when(consultaService.findById(1L)).thenReturn(Optional.of(consulta));
-
-        ResponseEntity<ConsultaDTO> response = consultaController.findById(1L);
-        assertEquals(200, response.getStatusCodeValue());
+        when(consultaService.findById(1L)).thenReturn(consulta);
+        ResponseEntity<?> response = consultaController.findById(1L);
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(consulta, response.getBody());
     }
 
     @Test
     void testFindByIdNotFound() {
-        when(consultaService.findById(1L)).thenReturn(Optional.empty());
-
-        ResponseEntity<ConsultaDTO> response = consultaController.findById(1L);
-        assertEquals(404, response.getStatusCodeValue());
-        assertNull(response.getBody());
+        when(consultaService.findById(1L)).thenThrow(new ConsultaNotFoundException("Consulta não encontrada"));
+        assertThrows(ConsultaNotFoundException.class, () -> consultaController.findById(1L));
     }
 
     @Test
@@ -73,7 +79,7 @@ class ConsultaControllerTest {
         when(consultaService.save(any(ConsultaDTO.class))).thenReturn(consulta);
 
         ResponseEntity<?> response = consultaController.save(consulta, bindingResult);
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(200, response.getStatusCode().value());
         assertEquals(consulta, response.getBody());
     }
 
@@ -84,7 +90,7 @@ class ConsultaControllerTest {
         when(bindingResult.getAllErrors()).thenReturn(Arrays.asList());
 
         ResponseEntity<?> response = consultaController.save(consulta, bindingResult);
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
     }
 
     @Test
@@ -94,15 +100,16 @@ class ConsultaControllerTest {
         when(consultaService.save(any(ConsultaDTO.class))).thenThrow(new RuntimeException("Erro"));
 
         ResponseEntity<?> response = consultaController.save(consulta, bindingResult);
-        assertEquals(400, response.getStatusCodeValue());
+        assertEquals(400, response.getStatusCode().value());
         assertEquals("Erro", response.getBody());
     }
 
     @Test
     void testDeleteById() {
         doNothing().when(consultaService).deleteById(1L);
-        ResponseEntity<Void> response = consultaController.deleteById(1L);
-        assertEquals(204, response.getStatusCodeValue());
+        ResponseEntity<String> response = consultaController.deleteById(1L);
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Consulta removida com sucesso.", response.getBody());
         verify(consultaService, times(1)).deleteById(1L);
     }
 }

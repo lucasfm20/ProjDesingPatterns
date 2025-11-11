@@ -44,7 +44,7 @@ public class Ajuda {
 
         ArrayList<String> estudantes = new ArrayList<>();
         estudantes.add("Lucas Fortunato Martins");
-        estudantes.add("João Vitor Rodrigues Rocha");
+        estudantes.add("Kauã Machado Grathwohl");
 
 
         return new Ajuda(estudantes,"Mapeamento de consultas médicas","Saúde e Bem-estar"

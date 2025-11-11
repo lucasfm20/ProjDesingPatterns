@@ -1,0 +1,596 @@
+{
+  "info": {
+    "_postman_id": "5a9615b1-70f7-4e45-9e7b-8fdc3b9b16c0",
+    "name": "Medico API",
+    "description": "Coleção com todos os endpoints da API Medico (Spring Boot). Inclui exemplos de payloads válidos e um cenário de erro 404 tratado pelo GlobalExceptionHandler.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Ajuda",
+      "item": [
+        {
+          "name": "Obter informações de ajuda",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ajuda",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ajuda"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Médicos",
+      "item": [
+        {
+          "name": "Listar médicos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/medicos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "medicos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar médico por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/medicos/{{medicoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "medicos",
+                "{{medicoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastrar médico",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Dra. Ana Lima\",\n  \"especialidade\": \"Dermatologia\",\n  \"contato\": \"11987654321\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/medicos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "medicos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remover médico",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/medicos/{{medicoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "medicos",
+                "{{medicoId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Pacientes",
+      "item": [
+        {
+          "name": "Listar pacientes (paginado)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pacientes?page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pacientes"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar paciente por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pacientes/{{pacienteId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pacientes",
+                "{{pacienteId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastrar paciente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Carlos Andrade\",\n  \"dataDeNascimento\": \"1990-05-20\",\n  \"contato\": \"11991234567\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pacientes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pacientes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar paciente (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contato\": \"11990001111\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/pacientes/{{pacienteId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pacientes",
+                "{{pacienteId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remover paciente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/pacientes/{{pacienteId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "pacientes",
+                "{{pacienteId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Consultas",
+      "item": [
+        {
+          "name": "Listar consultas (paginado)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/consultas?page=0&size=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consultas"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar consulta por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/consultas/{{consultaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consultas",
+                "{{consultaId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastrar consulta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pacienteId\": {{pacienteId}},\n  \"medicoId\": {{medicoId}},\n  \"dataHora\": \"2025-12-01T14:00:00\",\n  \"descricao\": \"Consulta de retorno para avaliação detalhada.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/consultas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consultas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir consulta",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/consultas/{{consultaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consultas",
+                "{{consultaId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consulta inexistente (exemplo 404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/consultas/{{consultaInexistenteId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "consultas",
+                "{{consultaInexistenteId}}"
+              ]
+            },
+            "description": "Dispara a ConsultaNotFoundException e retorna 404 via GlobalExceptionHandler."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Diagnósticos",
+      "item": [
+        {
+          "name": "Listar diagnósticos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/diagnosticos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "diagnosticos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar diagnóstico por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/diagnosticos/{{diagnosticoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "diagnosticos",
+                "{{diagnosticoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastrar diagnóstico",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pacienteId\": {{pacienteId}},\n  \"medicoId\": {{medicoId}},\n  \"dataHora\": \"2025-12-02T09:30:00\",\n  \"descricao\": \"Diagnóstico clínico completo para acompanhamento.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/diagnosticos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "diagnosticos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remover diagnóstico",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/diagnosticos/{{diagnosticoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "diagnosticos",
+                "{{diagnosticoId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tratamentos",
+      "item": [
+        {
+          "name": "Listar tratamentos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tratamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tratamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar tratamento por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tratamentos/{{tratamentoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tratamentos",
+                "{{tratamentoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cadastrar tratamento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"diagnosticoId\": {{diagnosticoId}},\n  \"medicamentoId\": \"MED-1234\",\n  \"descricao\": \"Tratamento medicamentoso com acompanhamento semanal.\",\n  \"duracao\": \"8 semanas\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tratamentos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tratamentos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remover tratamento",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tratamentos/{{tratamentoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tratamentos",
+                "{{tratamentoId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Adapter Externo",
+      "item": [
+        {
+          "name": "Adaptar consulta externa",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idConsulta\": 42,\n  \"idPaciente\": {{pacienteId}},\n  \"idMedico\": {{medicoId}},\n  \"data\": \"2025-12-15T09:00:00\",\n  \"detalhes\": \"Consulta oriunda de sistema parceiro.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/adapter-teste",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "adapter-teste"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": []
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": []
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "medicoId",
+      "value": "1"
+    },
+    {
+      "key": "pacienteId",
+      "value": "1"
+    },
+    {
+      "key": "consultaId",
+      "value": "1"
+    },
+    {
+      "key": "consultaInexistenteId",
+      "value": "999"
+    },
+    {
+      "key": "diagnosticoId",
+      "value": "1"
+    },
+    {
+      "key": "tratamentoId",
+      "value": "1"
+    }
+  ]
+}
+
